@@ -1,0 +1,1 @@
+Delayed Upgrade Contract: All UpgradeCaps placed in this contract will be delayed upgrades. The upgrader will open source the upgrade contract and write the digest into the upgrade strategy so that users have 48 hours to audit the contract upgrade content.
