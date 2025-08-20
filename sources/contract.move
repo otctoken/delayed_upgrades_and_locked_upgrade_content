@@ -3,7 +3,7 @@ module policy::delayed_upgrades_and_locked_upgrade_content{
     use sui::package;
     use sui::clock::{Clock};
     // Day is not a week day (number in range 0 <= day < 7).
-    const MS_IN_DAY: u64 = 48 * 60 * 60 * 1000;//修改为1000
+    const MS_IN: u64 = 48 * 60 * 60 * 1000;//修改为1000
 
 
     public struct Policy has key, store {
@@ -35,19 +35,20 @@ module policy::delayed_upgrades_and_locked_upgrade_content{
         digest:vector<u8>, 
         clk: &Clock,
     ){
-        pro.eta_ms = clk.timestamp_ms() + MS_IN_DAY;
+        pro.eta_ms = clk.timestamp_ms() + MS_IN;
         pro.digest = digest;
     }
     public fun authorize_upgrade(
         cap:&mut Policy,
         pro:&mut Proposal,
+        pol:u8,
         clk: &Clock,
         ctx: &TxContext,
     ): package::UpgradeTicket {
         assert!(pro.eta_ms > 0, 0);
         assert!(pro.eta_ms < clk.timestamp_ms(), 1);
         pro.eta_ms = 0;
-        cap.cap.authorize_upgrade(0, pro.digest)
+        cap.cap.authorize_upgrade(pol, pro.digest)
     }
 
     public fun commit_upgrade(
