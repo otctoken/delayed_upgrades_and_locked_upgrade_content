@@ -3,7 +3,7 @@ module policy::delayed_upgrades_and_locked_upgrade_content{
     use sui::package;
     use sui::clock::{Clock};
     // Day is not a week day (number in range 0 <= day < 7).
-    const MS_IN: u64 = 48 * 60 * 60 * 1000;//修改为1000
+    const MS_IN: u64 = 48 * 60 * 60 * 1000;
 
 
     public struct Policy has key, store {
